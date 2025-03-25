@@ -20,9 +20,20 @@
 
     <script>
         async function fetchData() {
-            let response = await fetch('https://raw.githubusercontent.com/tejas739/form-submission-repo.github.io/main/data.json');
-            let data = await response.json();
+            const response = await fetch('https://api.github.com/repos/tejas739/form-data-repo/contents/data.json', {
+                headers: { 'Accept': 'application/vnd.github.v3+json' }
+            });
+
+            if (!response.ok) {
+                console.error("Failed to fetch data.json");
+                return;
+            }
+
+            const file = await response.json();
+            const data = JSON.parse(atob(file.content)); // Decode Base64 content
+
             let tableBody = document.getElementById("data-table");
+            tableBody.innerHTML = ""; // Clear previous entries
 
             data.forEach(entry => {
                 let row = `<tr>
@@ -33,6 +44,7 @@
                 tableBody.innerHTML += row;
             });
         }
+
         fetchData();
     </script>
 </body>
