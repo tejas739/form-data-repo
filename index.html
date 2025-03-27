@@ -34,8 +34,6 @@
                 const data = await response.json();
                 const tableBody = document.getElementById("table-body");
 
-                tableBody.innerHTML = "";
-
                 if (data.length === 0) {
                     tableBody.innerHTML = "<tr><td colspan='3'>No data found</td></tr>";
                     return;
