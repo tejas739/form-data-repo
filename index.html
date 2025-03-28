@@ -22,7 +22,9 @@
                 <th>Message</th>
             </tr>
         </thead>
-        <tbody id="table-body"></tbody>
+        <tbody id="table-body">
+            <!-- Data will be inserted here dynamically -->
+        </tbody>
     </table>
 
     <script>
@@ -33,6 +35,7 @@
 
                 const data = await response.json();
                 const tableBody = document.getElementById("table-body");
+                
 
                 if (data.length === 0) {
                     tableBody.innerHTML = "<tr><td colspan='3'>No data found</td></tr>";
@@ -44,14 +47,15 @@
                     row.innerHTML = `<td>${entry.name}</td><td>${entry.email}</td><td>${entry.message}</td>`;
                     tableBody.appendChild(row);
                 });
-
             } catch (error) {
                 console.error("Error fetching data:", error);
                 document.getElementById("table-body").innerHTML = "<tr><td colspan='3'>Error loading data</td></tr>";
             }
         }
 
-        window.onload = fetchData;
+        // Fetch data every 5 seconds to update dynamically
+        fetchData();
+        setInterval(fetchData, 5000);
     </script>
 
 </body>
