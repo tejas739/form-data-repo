@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Submissions</title>
@@ -12,7 +12,6 @@
     </style>
 </head>
 <body>
-
     <h2>Form Submissions</h2>
     <table>
         <thead>
@@ -22,9 +21,7 @@
                 <th>Message</th>
             </tr>
         </thead>
-        <tbody id="table-body">
-            <!-- Data will be inserted here dynamically -->
-        </tbody>
+        <tbody id="table-body"></tbody>
     </table>
 
     <script>
@@ -42,21 +39,20 @@
                     return;
                 }
 
+                let tableContent = "";
                 data.forEach(entry => {
-                    const row = document.createElement("tr");
-                    row.innerHTML = `<td>${entry.name}</td><td>${entry.email}</td><td>${entry.message}</td>`;
-                    tableBody.appendChild(row);
+                    tableContent += `<td>${entry.name}</td><td>${entry.email}</td><td>${entry.message}</td>`;
                 });
+                
+                tableBody.innerHTML = tableContent;
+
             } catch (error) {
                 console.error("Error fetching data:", error);
                 document.getElementById("table-body").innerHTML = "<tr><td colspan='3'>Error loading data</td></tr>";
             }
         }
 
-        // Fetch data every 5 seconds to update dynamically
-        fetchData();
-        setInterval(fetchData, 5000);
+        window.onload = fetchData;
     </script>
-
 </body>
 </html>
